@@ -1,0 +1,101 @@
+<main class="min-h-screen bg-[#f9fafb]">
+  <section class="hero-banner relative"> 
+    
+    <div class="nav-brand" (click)="navigateToHome()">
+      <span class="logo">ZakaPuna</span>
+      <p class="tagline">Luxury Hospitality Experience</p>
+    </div>
+
+    <div class="container mx-auto max-w-6xl text-center md:text-left">
+      <h1 class="hero-title">Find Your Perfect Retreat</h1>
+      <p class="hero-subtitle">Discover hand-picked hotels and cozy cabins for your next vacation</p>
+
+      <div class="search-container">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (keyup.enter)="performSmartSearch()"
+            placeholder="Where do you want to go?" 
+            class="search-input">
+        </div>
+        <button (click)="performSmartSearch()" class="search-button">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container mx-auto px-6 py-12">
+    <div class="filter-wrapper">
+      <button routerLink="/" class="filter-btn">Home</button> 
+      <button (click)="applyFilter('all')" [class.active]="selectedType === 'all'" class="filter-btn">All Places</button>
+      <button (click)="applyFilter('zimmer')" [class.active]="selectedType === 'zimmer'" class="filter-btn">Zimmers</button>
+      <button (click)="applyFilter('apartment')" [class.active]="selectedType === 'apartment'" class="filter-btn">Apartments</button>
+      <button (click)="applyFilter('villa')" [class.active]="selectedType === 'villa'" class="filter-btn">Villas</button>
+      <button (click)="applyFilter('suite')" [class.active]="selectedType === 'suite'" class="filter-btn">Suites</button>
+    </div>
+
+    @if (filteredProperties.length > 0) {
+    <div class="property-grid">
+      @for (item of filteredProperties; track item._id) {
+      <app-hotel-card [title]="item.title" [image]="item.image" [pricePerNight]="item.pricePerNight"
+        [location]="item.location" [rating]="item.rating" [hotel]="item">
+      </app-hotel-card>
+      }
+    </div>
+    } @else {
+    <div class="no-results-state">
+      <span class="emoji">🏝️</span>
+      <h3>No properties found in this category.</h3>
+      <button (click)="applyFilter('all')" class="reset-link">Show all results</button>
+    </div>
+    }
+  </div>
+  <footer class="site-footer">
+  <div class="footer-content container mx-auto px-6">
+    
+    <div class="footer-section brand-info">
+      <div class="footer-logo">
+        <span class="logo-text">ZakaPuna</span>
+        <p class="tagline">Luxury Hospitality Experience</p>
+      </div>
+      <p class="company-desc">
+        חווית האירוח היוקרתית ביותר בישראל. ממלונות בוטיק ועד וילות יוקרה, אנחנו כאן כדי להפוך כל חופשה לזיכרון בלתי נשכח.
+      </p>
+    </div>
+
+    <div class="footer-section">
+      <h4>הסניפים שלנו</h4>
+      <ul class="footer-links">
+        <li>📍 תל אביב: רוטשילד 22</li>
+        <li>📍 ירושלים: ממילא 10</li>
+        <li>📍 אילת: טיילת המלך שלמה</li>
+        <li>📍 חיפה: מרכז הכרמל</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>צרו קשר</h4>
+      <ul class="footer-links">
+        <li>📞 שירות לקוחות: 1-800-20-30-40</li>
+        <li>✉️ אימייל: VIP@ZakaPuna.co.il</li>
+        <li>🕒 שעות פעילות: א'-ה' 09:00-18:00</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>עקבו אחרינו</h4>
+      <div class="social-icons">
+        <a href="#" class="social-icon">Instagram</a>
+        <a href="#" class="social-icon">Facebook</a>
+        <a href="#" class="social-icon">LinkedIn</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 ZakaPuna - All Rights Reserved | Luxury Hospitality Group</p>
+  </div>
+</footer>
+</main>

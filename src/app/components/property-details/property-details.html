@@ -1,0 +1,160 @@
+<div class="main-wrapper" *ngIf="property" dir="rtl">
+
+  <header class="hero-header">
+    <div class="header-content">
+      <div class="title-area">
+        <h1>{{ property.title }}</h1>
+        <p class="location-badge"> {{ property.location }}</p>
+      </div>
+      <div class="action-buttons">
+        <button (click)="goToFavorites()" class="fav-btn">
+          ❤️ מעבר למועדפים
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="gallery-container">
+    <button class="scroll-arrow left" (click)="scrollSlider(-400)">&#10094;</button>
+    <div class="image-track" #imageSlider>
+      <img [src]="formatImageUrl(property.images[0])" class="gallery-img" [alt]="property.title">
+      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800" class="gallery-img"
+        alt="Modern White Living Area">
+      <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800" class="gallery-img"
+        alt="Cozy Bedroom with Natural Light">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800" class="gallery-img"
+        alt="Outdoor Garden Area with Greenery">
+        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800" class="gallery-img"
+        alt="Contemporary Bathroom with Clean Lines">
+                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36" class="gallery-img"
+        alt="Contemporary Bathroom with Clean Lines">
+    </div>
+    <button class="scroll-arrow right" (click)="scrollSlider(400)">&#10095;</button>
+  </div>
+
+  <div class="main-grid">
+    <div class="info-column">
+
+      <section class="details-card map-card">
+        <h2 class="card-title">📍 מיקום הנכס</h2>
+        <div class="map-container">
+          <iframe [src]="getMapEmbedUrl(property.location)" class="embedded-map" frameborder="0" allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+        <p class="map-address">{{ property.location }}</p>
+      </section>
+
+      <section class="details-card">
+        <h2 class="card-title">🏡 על חוויית האירוח</h2>
+        <p class="property-desc">{{ property.description }}</p>
+
+        <div class="amenities-grid">
+          <div class="amenity">🏠 <strong>סוג:</strong> {{ property.type }}</div>
+          <div class="amenity">👥 <strong>אורחים:</strong> עד 6 נופשים</div>
+          <div class="amenity">📶 <strong>WiFi:</strong> כלול חופשי</div>
+          <div class="amenity">❄️ <strong>מיזוג:</strong> מיזוג מלא</div>
+        </div>
+      </section>
+
+      <section class="details-card">
+        <h2 class="card-title">💬 מה האורחים שלנו אומרים?</h2>
+        <div class="reviews-list" *ngIf="reviews.length > 0">
+          <div class="review-bubble" *ngFor="let rev of reviews">
+            <div class="rev-header">
+              <span class="rev-user">{{ rev.userName }}</span>
+              <span class="rev-date">{{ rev.date | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <p class="rev-content">{{ rev.text }}</p>
+          </div>
+        </div>
+        <div class="no-reviews" *ngIf="reviews.length === 0">
+          <p>עדיין אין ביקורות.</p>
+        </div>
+        <div class="add-review-section">
+          <textarea [(ngModel)]="newReviewText" placeholder="ספרו לנו על החוויה שלכם..." rows="3"></textarea>
+          <button (click)="addReview()" [disabled]="!newReviewText" class="btn-send-review">
+            שלח ביקורת
+          </button>
+
+        </div>
+      </section>
+    </div>
+
+    <aside class="booking-column">
+      <div class="booking-sticky-card">
+        <div class="price-header">
+          <span class="price-amount">₪{{ property.pricePerNight }}</span>
+          <span class="price-label">/ לילה</span>
+        </div>
+        <div class="booking-fields">
+          <div class="field">
+            <label>שם המזמין</label>
+            <input type="text" placeholder="הכנס שם מלא">
+          </div>
+          <div class="field">
+            <label>טלפון ליצירת קשר</label>
+            <input type="tel" placeholder="05x-xxxxxxx">
+          </div>
+          <!-- 🔴 התיקון כאן: שינוי מ-addToCart() ל-toggleFavorite() -->
+<button class="btn-add-cart" 
+        (click)="toggleFavorite(property._id!)" 
+        [disabled]="isTogglingFavorite"
+        [class.in-cart]="isFavorite(property._id!)">
+        
+  <span *ngIf="!isFavorite(property._id!)">❤️ הוסף למועדפים</span>
+  <span *ngIf="isFavorite(property._id!)">✓ נמצא במועדפים</span>
+</button>
+          <button class="btn-reserve">💳 המשך להזמנה</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<footer class="site-footer">
+  <div class="footer-content container mx-auto px-6">
+    
+    <div class="footer-section brand-info">
+      <div class="footer-logo">
+        <span class="logo-text">ZakaPuna</span>
+        <p class="tagline">Luxury Hospitality Experience</p>
+      </div>
+      <p class="company-desc">
+        חווית האירוח היוקרתית ביותר בישראל. ממלונות בוטיק ועד וילות יוקרה, אנחנו כאן כדי להפוך כל חופשה לזיכרון בלתי נשכח.
+      </p>
+    </div>
+
+    <div class="footer-section">
+      <h4>הסניפים שלנו</h4>
+      <ul class="footer-links">
+        <li>📍 תל אביב: רוטשילד 22</li>
+        <li>📍 ירושלים: ממילא 10</li>
+        <li>📍 אילת: טיילת המלך שלמה</li>
+        <li>📍 חיפה: מרכז הכרמל</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>צרו קשר</h4>
+      <ul class="footer-links">
+        <li>📞 שירות לקוחות: 1-800-20-30-40</li>
+        <li>✉️ אימייל: VIP@ZakaPuna.co.il</li>
+        <li>🕒 שעות פעילות: א'-ה' 09:00-18:00</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>עקבו אחרינו</h4>
+      <div class="social-icons">
+        <a href="#" class="social-icon">Instagram</a>
+        <a href="#" class="social-icon">Facebook</a>
+        <a href="#" class="social-icon">LinkedIn</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 ZakaPuna - All Rights Reserved | Luxury Hospitality Group</p>
+  </div>
+</footer>

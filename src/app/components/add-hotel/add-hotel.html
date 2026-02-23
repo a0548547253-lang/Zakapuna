@@ -1,0 +1,93 @@
+<section class="add-hotel-section">
+  <div class="nav-brand" (click)="navigateToHome()">
+    <span class="logo">ZakaPuna</span>
+    <p class="tagline">Luxury Hospitality Experience</p>
+  </div>
+
+  <div class="form-container">
+    
+    <div class="image-upload-area" (click)="fileInput.click()">
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden accept="image/*">
+<div class="image-preview">
+  @if (newHotel.images && newHotel.images.length > 0) {
+    <img [src]="newHotel.images[0]" alt="Preview">
+  } @else {
+    <div class="placeholder-content">
+      <span class="icon">📸</span>
+      <p>לחץ להעלאת תמונה מרהיבה</p>
+    </div>
+  }
+</div>
+    </div>
+
+    <div class="form-content">
+      <div class="header-text">
+        <h2>הוספת מקום אירוח</h2>
+        <p>מלאו את הפרטים כדי להצטרף לנבחרת שלנו</p>
+      </div>
+
+      <div class="input-grid">
+        <div class="full-width">
+          <label>שם המקום</label>
+          <input type="text" [(ngModel)]="newHotel.title" placeholder="לדוגמה: מלון הבוטיק שלי">
+        </div>
+
+        <div class="full-width">
+          <label>כתובת מלאה</label>
+          <input type="text" [(ngModel)]="newHotel.location" placeholder="עיר, רחוב ומספר">
+        </div>
+
+        <div class="full-width">
+          <label>תיאור קצר</label>
+          <input type="text" [(ngModel)]="newHotel.description" placeholder="ספרו קצת על המקום...">
+        </div>
+
+        <div>
+          <label>סוג אירוח</label>
+          <select [(ngModel)]="newHotel.type">
+            <option value="" disabled selected>בחר סוג...</option>
+            <option value="hotel">מלון</option>
+            <option value="zimmer">צימר</option>
+            <option value="suite">סוויטה</option>
+            <option value="villa">וילה</option>
+            <option value="apartment">דירה</option>
+          </select>
+        </div>
+
+        <div>
+          <label>מחיר ללילה ($)</label>
+          <input type="number" [(ngModel)]="newHotel.pricePerNight" placeholder="0">
+        </div>
+
+        <div class="full-width">
+          <label>מקסימום אורחים</label>
+          <input type="number" [(ngModel)]="newHotel.maxGuests">
+        </div>
+
+        <div class="full-width divider">
+          <hr>
+          <span>פרטי בעלי הנכס</span>
+        </div>
+
+        <div class="full-width">
+          <label>שם מלא</label>
+          <input type="text" [(ngModel)]="newHotel.ownerName">
+        </div>
+
+        <div>
+          <label>אימייל</label>
+          <input type="email" [(ngModel)]="newHotel.ownerEmail">
+        </div>
+
+        <div>
+          <label>טלפון</label>
+          <input type="text" [(ngModel)]="newHotel.ownerPhone">
+        </div>
+      </div>
+
+      <button class="save-btn" (click)="saveHotel()">
+        <span>פרסם מקום אירוח</span>
+      </button>
+    </div>
+  </div>
+</section>

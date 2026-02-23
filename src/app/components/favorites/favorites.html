@@ -1,0 +1,43 @@
+<div class="favorites-container" dir="rtl">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>המועדפים שלי ❤️</h1>
+      <button class="back-btn" (click)="goBack()">חזרה לחיפוש</button>
+    </div>
+  </header>
+
+  @if (isLoading) {
+    <div class="loading-spinner">טוען מועדפים...</div>
+  } @else {
+    @if (ser.favorites && ser.favorites.length > 0) {
+      <div class="favorites-grid">
+        @for (prop of ser.favorites; track prop._id) {
+          <div class="fav-card" (click)="viewProperty(prop._id!)">
+            <div class="image-wrapper">
+              <img [src]="prop.images && prop.images.length ? prop.images[0] : 'assets/no-image.png'" 
+                   [alt]="prop.title">
+              <div class="price-tag">₪{{ prop.pricePerNight }}</div>
+            </div>
+
+            <div class="card-content">
+              <h3>{{ prop.title }}</h3>
+              <p class="location">📍 {{ prop.location }}</p>
+              <p class="description">{{ prop.description || 'אין תיאור זמין' }}</p>
+            </div>
+
+            <div class="card-footer">
+              <button class="remove-btn" (click)="removeFav(prop._id!, $event)">
+                🗑️ הסר מהרשימה
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <div class="empty-icon">📂</div>
+        <p>רשימת המועדפים שלך ריקה...</p>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,81 @@
+<nav class="top-nav">
+  <div class="nav-brand">
+    <span class="logo">ZakaPuna</span>
+    <p class="tagline">Luxury Hospitality Experience</p>
+  </div>
+
+  <div class="nav-actions">
+    <button class="circle-btn" [routerLink]="['/favorites']" title="Favorites">
+      <span class="icon">❤</span>
+    </button>
+
+    @if (!authService.isLoggedIn()) {
+    <button class="circle-btn" [routerLink]="['/register']" title="Login">
+      <span class="icon">👤</span>
+    </button>
+    }
+
+    @if (authService.isLoggedIn()) {
+    <div class="user-status">
+<span class="welcome-msg">
+  Hi, {{ authService.getCurrentUser()?.fullName || authService.getCurrentUser()?.firstName }}
+</span>
+ <button class="circle-btn" (click)="authService.logout()" title="Logout">
+        <span class="icon">👤</span>
+      </button>
+    </div>
+    }
+  </div>
+</nav>
+
+<div class="main">
+  <div class="hero-text">
+    <h3>Welcome to ZakaPuna</h3>
+    <h1>Find Your Next Dream Stay</h1>
+  </div>
+
+  <div class="carousel">
+    <div class="card" [routerLink]="['/listhotels']" [queryParams]="{ type: 'zimmer' }" id="c1">
+      <div class="txt">
+        <h1>ZIMMERS</h1>
+        <p>Nature and relaxation</p>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/listhotels']" [queryParams]="{ type: 'apartment' }" id="c2">
+      <div class="txt">
+        <h1>APARTMENTS</h1>
+        <p>Feel at home in the city</p>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/listhotels']" [queryParams]="{ type: 'villa' }" id="c3">
+      <div class="txt">
+        <h1>Villas</h1>
+        <p>Luxury hospitality</p>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/about']" id="c4">
+      <div class="txt">
+        <h1>ABOUT US</h1>
+        <p>Our story & vision</p>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/add-hotel']" id="c5">
+      <div class="txt">
+        <h1>ADD PLACE</h1>
+        <p>Share your property with us</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="left">
+      <h3>International-class hotels</h3>
+      <h1>Not just rooms – a hospitality experience you will want <br> to return to again and again.</h1>
+      <p class="date">NOV DE, 2026 | For a perfect experience</p>
+    </div>
+  </div>
+</div>

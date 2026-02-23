@@ -1,0 +1,37 @@
+<div class="auth-container">
+    <div class="nav-brand" (click)="navigateToHome()">
+    <span class="logo">ZakaPuna</span>
+    <p class="tagline">Luxury Hospitality Experience</p>
+  </div>
+  <div class="auth-card">
+    <h2>{{ isLoginMode ? 'ברוכים הבאים' : 'הצטרפו אלינו' }}</h2>
+    
+    <div class="error-banner" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <form (ngSubmit)="isLoginMode ? onLogin() : onRegister()">
+      
+      <div *ngIf="!isLoginMode">
+        <div class="row">
+          <input type="text" [(ngModel)]="userForm.firstName" name="fname" placeholder="שם פרטי" required>
+          <input type="text" [(ngModel)]="userForm.lastName" name="lname" placeholder="שם משפחה" required>
+        </div>
+        <input type="tel" [(ngModel)]="userForm.phone" name="phone" placeholder="מספר טלפון" required>
+        <input type="text" [(ngModel)]="userForm.address" name="addr" placeholder="כתובת מגורים">
+      </div>
+
+      <input type="email" [(ngModel)]="userForm.email" name="email" placeholder="אימייל" required>
+      <input type="password" [(ngModel)]="userForm.password" name="pass" placeholder="סיסמה" required>
+      
+      <input *ngIf="!isLoginMode" type="password" [(ngModel)]="userForm.confirmPassword" name="confirm" placeholder="אימות סיסמה" required>
+
+      <button type="submit" class="btn-submit">
+        {{ isLoginMode ? 'כניסה למערכת' : 'הרשמה ושליחת אישור' }}
+      </button>
+    </form>
+
+    <p class="toggle-text">
+      {{ isLoginMode ? 'עדיין לא רשומים?' : 'כבר יש לכם חשבון?' }}
+      <span (click)="toggleMode()">{{ isLoginMode ? 'צרו חשבון עכשיו' : 'התחברו כאן' }}</span>
+    </p>
+  </div>
+</div>

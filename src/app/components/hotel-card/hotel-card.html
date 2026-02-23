@@ -1,0 +1,34 @@
+<div class="property-card">
+  <div class="image-wrapper">
+    <img [src]="cleanImage" class="property-image" [alt]="title">
+    <button class="wishlist-btn">❤️</button>
+    <span class="badge-popular">Popular</span>
+  </div>
+
+  <div class="card-content">
+    <div class="header-row">
+      <h3 class="property-title">{{ title }}</h3>
+      <span class="rating">⭐ {{ rating }}</span>
+    </div>
+
+    <p class="location">{{ location }}</p>
+
+    <p class="description">
+      Cozy cabin with stunning mountain views and modern amenities.
+    </p>
+
+    <div class="amenities">
+      <span>2 Bedrooms</span> • <span>Hot Tub</span> • <span>Fireplace</span>
+    </div>
+
+    <div class="footer-row">
+      <div class="price-section">
+        <span class="from-text">From</span>
+        <p class="price-tag">₪{{ pricePerNight }}<span class="night-text">/night</span></p>
+      </div>
+      <button class="view-details" (click)="toggleDetails($event)">
+        View Details
+      </button>
+    </div>
+  </div>
+</div>
